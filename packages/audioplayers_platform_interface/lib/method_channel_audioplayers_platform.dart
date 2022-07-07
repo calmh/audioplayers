@@ -10,16 +10,14 @@ import 'package:audioplayers_platform_interface/method_channel_interface.dart';
 import 'package:audioplayers_platform_interface/streams_interface.dart';
 import 'package:flutter/services.dart';
 
-class MethodChannelAudioplayersPlatform extends AudioplayersPlatform
-    with StreamsInterface {
+class MethodChannelAudioplayersPlatform extends AudioplayersPlatform with StreamsInterface {
   final MethodChannel _channel = const MethodChannel('xyz.luan/audioplayers');
 
   MethodChannelAudioplayersPlatform() {
     _channel.setMethodCallHandler(platformCallHandler);
   }
 
-  static GlobalPlatformInterface get _logger =>
-      GlobalPlatformInterface.instance;
+  static GlobalPlatformInterface get _logger => GlobalPlatformInterface.instance;
 
   @override
   Future<int?> getCurrentPosition(String playerId) {
@@ -144,7 +142,7 @@ class MethodChannelAudioplayersPlatform extends AudioplayersPlatform
 
   Future<void> platformCallHandler(MethodCall call) async {
     try {
-      _doHandlePlatformCall(call);
+      await _doHandlePlatformCall(call);
     } on Exception catch (ex) {
       _logger.error('Unexpected error: $ex');
     }
